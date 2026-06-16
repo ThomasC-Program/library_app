@@ -12,6 +12,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dbbiblioteca',
+        'USER': 'userthm',
+        'PASSWORD': 'passpassword',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 

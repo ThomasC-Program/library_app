@@ -2,6 +2,8 @@ from django.db import models
 
 # from local apps
 from applications.autor.models import Autor
+# Import managers
+from .managers import LibroManager
 
 # Create your models here.
 class Categoria(models.Model):
@@ -22,8 +24,10 @@ class Libro(models.Model):
         max_length=50
     )
     fecha = models.DateField('Fechad de lanzamiento')
-    portada = models.ImageField(upload_to='portada')
+    portada = models.ImageField(upload_to='portada', blank=True)
     visitas = models.PositiveIntegerField()
+    
+    objects = LibroManager()
     
     def __str__(self):
         return self.titulo

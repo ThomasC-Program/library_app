@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 from applications.libro.models import Libro
 
+# from managers
+from .managers import PrestamoManager
+
 class Lector(models.Model):
     nombres = models.CharField(
         max_length=50
@@ -35,6 +38,8 @@ class Prestamo(models.Model):
     )
     
     devuelto = models.BooleanField()
+    
+    objects = PrestamoManager()
     
     def __str__(self):
         return self.libro.titulo

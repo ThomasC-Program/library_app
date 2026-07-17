@@ -32,4 +32,4 @@ class Libro(models.Model):
     objects = LibroManager()
     
     def __str__(self):
-        return self.titulo
+        return str(self.id) + '-' + self.titulo

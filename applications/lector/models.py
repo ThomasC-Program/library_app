@@ -21,7 +21,8 @@ class Lector(models.Model):
 class Prestamo(models.Model):
     lector = models.ForeignKey(
         Lector,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='libro_prestamo'
     )
     libro = models.ForeignKey(
         Libro,

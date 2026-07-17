@@ -27,3 +27,17 @@ class LibroManager(models.Manager):
         )
         
         return resultado
+    
+    def listar_libros_categoria(self, categoria):
+        
+        return self.filter(
+            categoria__id=categoria
+        ).order_by('titulo')
+        
+class CategoriaManager (models.Manager):
+    """ managers para el modelo autor """
+    
+    def categoria_por_autor(self, autor):
+        return self.filter(
+            categoria_libro__autores__id=autor
+        ).distinct()

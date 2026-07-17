@@ -3,21 +3,23 @@ from django.db import models
 # from local apps
 from applications.autor.models import Autor
 # Import managers
-from .managers import LibroManager
+from .managers import LibroManager, CategoriaManager
 
 # Create your models here.
 class Categoria(models.Model):
     nombre = models.CharField(
         max_length=30
     )
+    objects = CategoriaManager()
     
     def __str__(self):
-        return self.nombre
+        return str(self.id) + ' - ' + self.nombre
 
 class Libro(models.Model):
     categoria = models.ForeignKey(
         Categoria,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='categoria_libro'
     )
     autores = models.ManyToManyField(Autor)
     titulo = models.CharField(

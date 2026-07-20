@@ -16,10 +16,20 @@ class LibroManager(models.Manager):
         
         return resultado
     
+    def listar_libros_trg(self, kword):
+        
+        if kword:
+            resultado = self.filter(
+                titulo__trigram_similar=kword,
+            )
+            return resultado
+        else:
+            return self.all()[:10]                
+    
     def listar_libros2(self, kword, fecha1, fecha2):
         
         date1 = datetime.datetime.strptime(fecha1, "%Y-%m-%d").date()
-        date2 = datetime.datetime.strptime(fecha1, "%Y-%m-%d").date()
+        date2 = datetime.datetime.strptime(fecha2, "%Y-%m-%d").date()
         
         resultado = self.filter(
             titulo__icontains = kword,
@@ -41,9 +51,21 @@ class LibroManager(models.Manager):
     
     def libros_num_prestamos (self):
         resultado = self.aggregate(
-            num_prestamos=Count('libro_prestamos')
+            num_prestamos=Count('prestamo')
         )
         return resultado
+    
+    def num_libros_prestados (self):
+        resultado = self.annotate(
+            num_prestamos=Count('prestamo')
+        )
+        
+        for r in resultado:
+            print('-----------')
+            print(r, r.num_prestamos)
+        
+        return resultado
+    
         
 class CategoriaManager (models.Manager):
     """ managers para el modelo autor """
@@ -62,3 +84,4 @@ class CategoriaManager (models.Manager):
             print('***********')
             print(r, r.num_libros)
         return resultado
+    

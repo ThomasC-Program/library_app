@@ -1,5 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
 
+# apps tercer
+from PIL import Image
 # from local apps
 from applications.autor.models import Autor
 # Import managers
@@ -39,3 +42,15 @@ class Libro(models.Model):
     
     def __str__(self):
         return str(self.id) + '-' + self.titulo
+
+#Optimizar la imagen que esta cargada en servidor para que al momento de cargar sea los mas optimo posible
+def optimize_image(sender, instance, **kwargs):
+    print("====")
+    if instance.portada:
+        portada = Image.open(instance.portada.path)
+        portada.save(instance.portada.path, quality=20, optimaze=True)
+    
+    print(instance)
+    
+post_save.connect(optimize_image, sender=Libro)
+

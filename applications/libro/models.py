@@ -28,6 +28,7 @@ class Libro(models.Model):
     fecha = models.DateField('Fechad de lanzamiento')
     portada = models.ImageField(upload_to='portada', blank=True)
     visitas = models.PositiveIntegerField()
+    stok = models.PositiveIntegerField(default=0)
     
     objects = LibroManager()
     

@@ -33,5 +33,13 @@ class Prestamo(models.Model):
     
     objects = PrestamoManager()
     
+    def save(self, *args, **kwargs):
+        
+        print('=============')
+        self.libro.stok = self.libro.stok -1
+        self.libro.save()
+        
+        super(Prestamo, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.libro.titulo
